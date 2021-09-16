@@ -1,0 +1,21 @@
+---
+- name: Challenge Playbook
+  hosts: renamed,!taz #All hosts in "renamed", except Taz
+  gather_facts: no
+  connection: ssh
+  become: true #Elevate priviledge
+
+  vars:
+     username: "Thiago2"
+  tasks:
+     - name: "Creating group funkytown if not createrd already"
+       ansible.builtin.group:
+          name: funkytown
+          state: present
+       become: true
+
+     - name: "Creating a user "
+       ansible.builtin.user:
+          name: "{{ username }}"
+          groups: funkytown
+...
